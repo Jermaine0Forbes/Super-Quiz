@@ -30,7 +30,6 @@ Route::prefix("quiz")->group(function(){
 Route::prefix("questions")->group(function(){
   Route::get("/","QuestionController@index")->name("quest.list");
   Route::post("/getSubsects","QuestionController@getSubsect");
-  Route::get("/filter","QuestionController@getFilter");
   Route::get("/{id}","QuestionController@showQuest");
   // Route::get("/{id}/ajax","QuestionController@getAJAX");
 });

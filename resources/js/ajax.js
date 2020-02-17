@@ -2,6 +2,11 @@
   Ajax
 =================*/
 
+/* Variables  */
+  let csrf = $('meta[name="csrf-token"]').attr('content');
+  
+
+/* Functions  */
 const getQuestData = (o) => {
    if(getQuestData.fired) return;
 

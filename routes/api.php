@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix("question")->group(function(){
-  Route::get("/{id}", "QuestionAPIController@getAJAX");
   Route::post("/search", "QuestionAPIController@queryQuest");
+  Route::get("/filter","QuestionAPIController@getFilter");
+  Route::get("/{id}", "QuestionAPIController@getAJAX");
 });

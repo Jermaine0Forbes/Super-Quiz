@@ -22,7 +22,7 @@ class Question extends Model
           <a href='/questions/$id'>View details</a>
        </div>";
 
-     return [ "answer" => $quest[0],
+     return [ "answer" => $quest,
                "correct" => $correct,
                "total" => $total,
                "meta" => $meta,

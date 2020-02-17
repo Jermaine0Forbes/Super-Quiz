@@ -3,8 +3,12 @@
   Functions
 =================*/
 
-function log(log){
-  console.log(log)
+function createP(text , classes = null, ids = null, styles = null){
+  let cl = classes ? `class='${classes}'`: '',
+  id = ids ? `id='${ids}'` :'',
+  style = styles ? `style='${styles}'` : '';
+
+  return `<p ${cl} ${id} ${style}> ${text} </p>`;
 }
 
 function foo(){
@@ -12,17 +16,8 @@ function foo(){
 }
 
 
-function createP(text , classes = null, ids = null, styles = null){
-   let cl = classes ? `class='${classes}'`: '',
-       id = ids ? `id='${ids}'` :'',
-       style = styles ? `style='${styles}'` : '';
-
-  return `<p ${cl} ${id} ${style}> ${text} </p>`;
-}
-
-
-function booty(){
-  return "foo";
+function log(log){
+  console.log(log)
 }
 
 /*================
@@ -128,6 +123,11 @@ function runChart(){
   Ajax
 =================*/
 
+/* Variables  */
+  let csrf = $('meta[name="csrf-token"]').attr('content');
+  
+
+/* Functions  */
 const getQuestData = (o) => {
    if(getQuestData.fired) return;
 

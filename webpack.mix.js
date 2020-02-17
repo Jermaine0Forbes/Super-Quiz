@@ -15,6 +15,8 @@ const mix = require('laravel-mix');
 //     .sass('resources/sass/style.scss', 'public/css');
 // mix.scripts(['resources/js/functions.js','resources/js/chartjs-plugin-datalabels.min.js','resources/js/charts.js', 'resources/js/ajax.js'],
 //  'public/js/root.js')
-mix.scripts(['resources/js/functions.js','resources/js/charts.js', 'resources/js/ajax.js'],
- 'public/js/root.js')
+mix.scripts(['resources/js/functions.js',
+             'resources/js/charts.js',
+             'resources/js/ajax.js',
+            ],'public/js/root.js')
     .sass('resources/sass/style.scss', 'public/css');

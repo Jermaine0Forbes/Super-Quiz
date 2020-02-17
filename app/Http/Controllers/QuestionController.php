@@ -68,81 +68,9 @@ class QuestionController extends Controller
     }
 
 
-    public function formatSubs($quests){
-      foreach ($quests as $key => $q) {
-        $list = $q->subsections()->pluck("number")->toArray();
-        $q->subs = implode(",", $list);
-      }
-      return $quests;
-    }
+  
 
 
-
-    public function getFilter(Request $req){
-      $filter = $req->input("filter");
-      $section = $req->input("section") ;
-      $data = "";
-
-      // if ($filter =="recent") {
-      //   $quests = Question::where("section",$section)->latest()->get();
-      // }else{
-      //   $quests = $section > 0 ?  Question::where("section",$section)->get(): Question::get();
-      // }
-
-      switch ($filter) {
-        case 'recent':
-            $quests = $section > 0 ?  QC::where("section",$section)->latest()->get(): QC::latest()->get();
-          break;
-        case 'incorrect':
-            $quests = ($section > 0)?  QC::where("section",$section)->orderBy("wrong","desc")->get() : QC::orderBy("wrong","desc")->get();
-          break;
-        case 'correct':
-          $quests = $section > 0 ?  QC::where("section",$section)->orderBy("correct","desc")->get() : QC::orderBy("correct","desc")->get();
-          break;
-
-        default:
-            $quests = $section > 0 ?  QC::where("section",$section)->get(): QC::get();
-          break;
-      }
-      // if ($filter =="recent") {
-      //   $quests = QC::where("section",$section)->latest()->get();
-      // }else{
-      //   $quests = $section > 0 ?  QC::where("section",$section)->get(): QC::get();
-      // }
-
-      // $quests = $this->formatAnswers($quests);
-      $quests = $this->formatSubs($quests);
-
-      foreach ($quests as $key => $q) {
-
-        $correct = empty($q->correct)? "N/A" :"<span class='badge badge-success'>$q->correct </span>" ;
-        $wrong = empty($q->wrong )? "N/A" :"<span class='badge badge-danger'>$q->wrong </span>";
-        $subs = empty($q->subs) ? "N/A" :$q->subs ;
-        $link = "";
-        $data .="
-        <div class=\"mb-4 py-3 border-bottom\">
-          <div class=\"row\">
-            <div class=\"col-md-8\">
-              <h4><a href=\"/questions/{$q->id} \">{$q->question}</a></h4>
-              <h6>Section:{$q->section}, Subsection: $subs,
-                Correct: $correct , Wrong: $wrong</h6>
-            </div>
-            <div class=\"col-md-4 ml-auto\">
-              <ul class=\"nav d-flex justify-content-end\">
-                <li class=\"nav-item\"><a href=\"/question/edit/{$q->id}\" class=\"px-1\">Edit</a>|</li>
-                <li class=\"nav-item\"><a href=\"/questions/{$q->id}\" class=\"px-1\">Details</a>|</li>
-                <li class=\"nav-item\"><a href=\"/question/delete/{$q->id}\" class=\"px-1\">Remove</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        ";
-      }
-
-      // $quests = Question::find(42)->results()->select("correct")->get();
-
-      return response()->json(["data" => $data]);
-    }
 
     public function getSubsect(Request $req){
       $section = $req->input("section");

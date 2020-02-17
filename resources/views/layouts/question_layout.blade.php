@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>{{$title}} | Questions</title>
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     {{-- <link href="//cdn.quilljs.com/1.3.6/quill.core.css" rel="stylesheet"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
@@ -19,13 +21,13 @@
     {{-- <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script> --}}
     {{-- <script src="//cdn.quilljs.com/1.3.6/quill.core.js"></script> --}}
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+
   </head>
   <body>
     @include('components.header')
     @yield("content")
   </body>
+
   <script type="text/javascript">
     (function(){
 
@@ -184,44 +186,18 @@
         @elseif ($title == "List")
           const filter = $("select[name='filter']"),
               loadCont = $(".load-container"),
-              selectSect = $("select[name='section']"),
-              searchBtn = $("#ajax-search-btn");
+              selectSect = $("select[name='section']");
 
-              searchBtn.on("click", function(){
 
-                const url = "api/question/search",
-                      searchField = $("input[name='search']").val(),
-                      data = {query:searchField};
-
-                      // log(data)
-
-                    $.ajax({
-                      url:url,
-                      data: data,
-                      method: "POST",
-                      headers:{
-                        "X-CSRF-TOKEN":csrf
-                      },
-                      beforeSend:(res) =>{
-                        loadCont.slideDown(300);
-                      },
-                      error: (res) =>{
-                        console.log(res)
-                      },
-                      success: (res) =>{
-                        console.log(res)
-                        loadCont.slideUp(300);
-                      }
-
-                    });
-              });
 
             function filterQuests(){
               let f = filter.val(),
                   s = selectSect.val(),
+                  q = $("input[name='search']").val(),
                   data = {
                     filter:f,
-                    section:s
+                    section:s,
+                    query:q
                   };
 
                 // console.log(s)
@@ -229,8 +205,8 @@
                 loadCont.slideDown(300);
                 csrf = $('meta[name="csrf-token"]').attr('content');
                 $.ajax({
-                  url:"/questions/filter",
-                  method:"get",
+                  url:"api/question/search",
+                  method:"post",
                   data: data,
                   headers:{
                      "X-CSRF-TOKEN":csrf
@@ -265,4 +241,5 @@
 
     })()
   </script>
+  <script type="text/javascript" src="{{asset('js/question.js')}}"></script>
 </html>
