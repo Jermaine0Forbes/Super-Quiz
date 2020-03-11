@@ -70,6 +70,15 @@
             @endforeach
             {{$questions->links()}}
         </section>
+        <div class="pagination-container">
+            <div id="paginate-controller" class="d-flex">
+              <button class="paginate-prev-btn" type="button" name="button">prev</button>
+              <div class="px-2">
+                <span id="current-page" class="text-bold">0</span> of <span id="total-page">0</span>
+              </div>
+              <button class="paginate-next-btn" type="button" name="button">next</button>
+            </div>
+        </div>
       </div>
     </div>
   </div

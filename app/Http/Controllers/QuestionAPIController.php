@@ -132,8 +132,10 @@ class QuestionAPIController extends Controller
             break;
         }
 
-
+        $quest->limit(3);
         $data = $quest->get();
+
+        $count = count($data);
 
         $data = Subsection::getSubs($data);
 
@@ -167,7 +169,7 @@ class QuestionAPIController extends Controller
           $quests = "<h2 class='text-muted text-center'>We found no questions</h2>";
         }
       // return response()->json($req->all());
-      return response()->json(["data" => $quests]);
+      return response()->json(["data" => $quests, "count" => $count]);
       // return response()->json(["data" => $filter]);
     }
 
